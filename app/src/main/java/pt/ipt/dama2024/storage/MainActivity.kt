@@ -15,9 +15,17 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
 
+    // Shared Preferences
     private lateinit var btL1: Button
     private lateinit var btS1: Button
     private lateinit var txt1: EditText
+
+    // Shared Preferences with several files
+    private lateinit var btL2: Button
+    private lateinit var btS2: Button
+    private lateinit var txt2a: EditText
+    private lateinit var txt2b: EditText
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +47,47 @@ class MainActivity : AppCompatActivity() {
         btL1 = findViewById(R.id.btLoad1)
         btL1.setOnClickListener { readSharedPreferenceData() }
 
+
+        // Shared Preference with several files
+        txt2a = findViewById(R.id.editText2a)
+        txt2b = findViewById(R.id.editText2b)
+        btS2 = findViewById(R.id.btSave2)
+        btS2.setOnClickListener {
+            writeSharedPreferences()
+            hideKeyboard(it)
+        }
+        btL2 = findViewById(R.id.btLoad2)
+        btL2.setOnClickListener { readSharedPreferences() }
+
+    }
+
+    /**
+     * write some text and number to Shared Preferences in DIFFERENT files
+     */
+    private fun writeSharedPreferences() {
+        // escrita usando o sharedPreferences
+        val sharedPreferencesNomes = getSharedPreferences("nomes.dat", MODE_PRIVATE)
+        val sharedPreferencesIdades = getSharedPreferences("idades.dat", MODE_PRIVATE)
+        val editorNomes: SharedPreferences.Editor = sharedPreferencesNomes.edit()
+        val editorIdades: SharedPreferences.Editor = sharedPreferencesIdades.edit()
+        editorNomes.putString("NOME", txt2a.text.toString())
+        editorIdades.putInt("IDADE", txt2b.text.toString().toIntOrNull() ?: 0 ) // se idade = NULL => será atribuído o valor 0
+        editorNomes.commit()
+        editorIdades.commit()
+        Toast.makeText(this, "Data Saved", Toast.LENGTH_LONG).show()
+    }
+
+
+
+    /**
+     * Read data from Shared Preferences written in DIFFERENT files
+     */
+    private fun readSharedPreferences() {
+        val sharedPreferencesNomes = getSharedPreferences("nomes.dat", MODE_PRIVATE)
+        val sharedPreferencesIdades = getSharedPreferences("idades.dat", MODE_PRIVATE)
+        val nome = sharedPreferencesNomes.getString("NOME","Sem Nome")
+        val idade = sharedPreferencesIdades.getInt("IDADE", 0)
+        Toast.makeText(this, "Olá $nome. Tens $idade anos.",Toast.LENGTH_LONG).show()
     }
 
 

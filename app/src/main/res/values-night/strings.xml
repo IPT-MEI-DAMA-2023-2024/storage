@@ -4,5 +4,7 @@
     <string name="btSave">Save</string>
     <string name="btLoad">Load</string>
     <string name="storage_text_1">Shared preferences</string>
-    <string name="write_some_text">write some text</string>
+    <string name="storage_text_2">Shared preferences, w/ several files</string>
+    <string name="write_name">write your name</string>
+    <string name="write_age">write age</string>
 </resources>
