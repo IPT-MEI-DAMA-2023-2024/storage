@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Storage</string>
+    <string name="btSave">Save</string>
+    <string name="btLoad">Load</string>
 </resources>
